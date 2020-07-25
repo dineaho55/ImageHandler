@@ -1,6 +1,27 @@
-<div #canvas width="1000px" height="1000px" (click)="addImage()"> 
-  <p>Click to renderer!</p>
-  <svg id="DrawingAera" width="800px" height="800px" viewBox="0 0 800 800">
-
-  </svg>
-</div>
+<form>
+    <div class="form-group">
+        <fieldset class="form-group">
+            <label>Upload Logo</label>
+                {{imageError}}
+            <div class="custom-file fileInputProfileWrap">
+                <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                <div class="img-space">
+                    <ng-container *ngIf="isImageSaved; else removeTemplate">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <defs>
+                                <clipPath id="cut-off-bottom" stroke-witdh="2" stroke="green">
+                                    <circle [attr.cx]="imgwidth/2" [attr.cy]="imgheight * .9/2" [attr.r]="imgradial" />
+                                </clipPath>
+                            </defs>
+                            <image [attr.href]="cardImageBase64" clip-path="url(#cut-off-bottom)" />
+                        </svg> 
+                    </ng-container>
+                    <ng-template #removeTemplate> 
+                        <p> click to add image</p>
+                    </ng-template>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+  <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+</form>
